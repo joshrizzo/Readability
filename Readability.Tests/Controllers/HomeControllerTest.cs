@@ -18,7 +18,7 @@ namespace Readability.Tests.Controllers
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController(new RavenRepo(RavenInstaller.InitializeStore().OpenSession()));
+            HomeController controller = new HomeController();
 
             // Act
             ViewResult result = controller.Index() as ViewResult;
