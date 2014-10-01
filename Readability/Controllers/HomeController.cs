@@ -20,6 +20,29 @@ namespace Readability.Controllers
             // Get books from the XML file and turn them into Book objects. 
             try
             {
+                foreach (var book in XDocument.Load(AppDomain.CurrentDomain.GetData("DataDirectory").ToString() + @"\BookData.xml")
+                    .Element("books").Elements("book").ToList())
+                {
+                    booksFromXML.Add(new Book()
+                    {
+                        Author = book.Element("author").Value,
+                        Title = book.Element("title").Value,
+                        Year = int.Parse(book.Element("year").Value),
+                        Quantity = int.Parse(book.Element("quantity").Value)
+                    });
+                }
+            }
+            // Reading from files is dangerous, so lets catch any exeptions.
+            catch (Exception ex)
+            {
+                LogManager.GetLogger(typeof(HomeController)).Error("Stuff happened when loading the data from XML.", ex);
+                throw ex;
+            }
+
+            // Loop through the original list and filter certain results from the new list.  This is necessary because C# does not like us modifying the list that we are looping through.
+            var viewModel = new List<HomeIndexViewModel>();
+            foreach (var book in booksFromXML)
+            {
                 foreach (var book in XDocument.Load(AppDomain.CurrentDomain
                     .GetData("DataDirectory").ToString() + @"\BookData.xml")
                     .Element("books").Elements("book").ToList())
@@ -41,28 +64,8 @@ namespace Readability.Controllers
                 throw ex;
             }
 
-            if (booksFromXML == null)
-            {
-                throw new ApplicationException("No books found.");
-            }
-            else
-            {
-                // Loop through the original list and filter certain results from the 
-                // new list.  This is necessary because C# does not like us modifying 
-                // the list that we are looping through.
-                var viewModel = new List<HomeIndexViewModel>();
-                foreach (var book in booksFromXML)
-                {
-                    viewModel.Add(new HomeIndexViewModel(book)
-                    {
-                        IsInStock = book.Quantity <= 0,
-                        IsOld = book.Year < 1990
-                    });
-                }
-
-                // Return the view and populate the model with the filtered list.
-                return View(viewModel);
-            }
+            // Return the view and populate the model with the filtered list.
+            return View(viewModel);
         }
     }
 }
