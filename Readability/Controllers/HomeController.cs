@@ -8,30 +8,28 @@ using Readability.DataModels;
 using Readability.ViewModels;
 using System.Xml.Linq;
 using log4net;
-using Readability.Services;
 
 namespace Readability.Controllers
 {
     public partial class HomeController : Controller
     {
-        private IBookRepo repo;
-
-        public HomeController(IBookRepo repo)
-        {
-            this.repo = repo;
-        }
-
         public virtual ActionResult Index()
         {
+            // List for books from DB.
             var booksFromXML = GetBooksFromXML();
+
+            // Construct the View Model.
             var viewModel = ConstructViewModel(booksFromXML);
+
+            // Return the view and populate the model with the filtered list.
             return View(viewModel);
         }
 
-        private static List<HomeIndexViewModel> ConstructViewModel(List<Book> books)
+        private static List<HomeIndexViewModel> ConstructViewModel(List<Book> booksFromXML)
         {
+            // Loop through the original list and filter certain results from the new list.  This is necessary because C# does not like us modifying the list that we are looping through.
             var viewModel = new List<HomeIndexViewModel>();
-            foreach (var book in books)
+            foreach (var book in booksFromXML)
             {
                 viewModel.Add(new HomeIndexViewModel(book)
                 {
@@ -44,7 +42,30 @@ namespace Readability.Controllers
 
         private List<Book> GetBooksFromXML()
         {
-            return repo.Books.ToList();
+            var booksFromXML = new List<Book>();
+            // Get books from the XML file and turn them into Book objects. 
+            try
+            {
+                var bookElements = XDocument.Load(AppDomain.CurrentDomain.GetData("DataDirectory").ToString() + @"\BookData.xml")
+                    .Element("books").Elements("book").ToList();
+                foreach (var book in bookElements)
+                {
+                    booksFromXML.Add(new Book()
+                    {
+                        Author = book.Element("author").Value,
+                        Title = book.Element("title").Value,
+                        Year = int.Parse(book.Element("year").Value),
+                        Quantity = int.Parse(book.Element("quantity").Value)
+                    });
+                }
+            }
+            // Reading from files is dangerous, so lets catch any exeptions.
+            catch (Exception ex)
+            {
+                LogManager.GetLogger(typeof(HomeController)).Error("Stuff happened when loading the data from XML.", ex);
+                throw ex;
+            }
+            return booksFromXML;
         }
     }
 }
