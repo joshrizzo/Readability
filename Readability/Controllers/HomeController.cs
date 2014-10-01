@@ -14,13 +14,6 @@ namespace Readability.Controllers
 {
     public partial class HomeController : Controller
     {
-        private IBookRepo repo;
-
-        public HomeController(IBookRepo repo)
-        {
-            this.repo = repo;
-        }
-
         public virtual ActionResult Index()
         {
             var booksFromXML = GetBooksFromXML();
@@ -28,10 +21,10 @@ namespace Readability.Controllers
             return View(viewModel);
         }
 
-        private static List<HomeIndexViewModel> ConstructViewModel(List<Book> books)
+        private static List<HomeIndexViewModel> ConstructViewModel(List<Book> booksFromXML)
         {
             var viewModel = new List<HomeIndexViewModel>();
-            foreach (var book in books)
+            foreach (var book in booksFromXML)
             {
                 viewModel.Add(new HomeIndexViewModel(book)
                 {
@@ -44,7 +37,7 @@ namespace Readability.Controllers
 
         private List<Book> GetBooksFromXML()
         {
-            return repo.Books.ToList();
+            return new SourceFileRepo().Books.ToList();
         }
     }
 }
