@@ -1,0 +1,23 @@
+﻿@model IEnumerable<HomeIndexViewModel>
+
+<h1>Our Books</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Is in stock?</th>
+            <th>New book?</th>
+        </tr>
+    </thead>
+    @foreach (var book in Model) 
+    {
+        <tr>
+            <td>@book.Title</td>
+            <td>@book.Author</td>
+            <td>@book.IsInStock</td>
+            <td>@(book.IsOld == false)</td>
+        </tr>
+    }
+</table>

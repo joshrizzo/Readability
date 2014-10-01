@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<books>
+  <book>
+    <title>The Hitchikers Guide to the Galaxy</title>
+    <author>Douglas Adams</author>
+    <year>1985</year>
+    <quantity>12</quantity>
+  </book>
+  <book>
+    <title>The Alphabet of Manliness</title>
+    <author>Maddox</author>
+    <year>2006</year>
+    <quantity>2</quantity>
+  </book>
+  <book>
+    <title>Harry Potter and the Sorcerer's Stone</title>
+    <author>J. K. Rowling</author>
+    <year>1997</year>
+    <quantity>0</quantity>
+  </book>
+  <book>
+    <title>Freakonomics</title>
+    <author>Steven D. Levitt and Stephen J. Dubner</author>
+    <year>2005</year>
+    <quantity>21</quantity>
+  </book>
+  <book>
+    <title>Clean Code</title>
+    <author>Robert C. Martin</author>
+    <year>2008</year>
+    <quantity>4</quantity>
+  </book>
+</books>
