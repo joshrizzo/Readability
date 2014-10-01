@@ -8,43 +8,24 @@ using Readability.DataModels;
 using Readability.ViewModels;
 using System.Xml.Linq;
 using log4net;
-using Readability.Services;
 
 namespace Readability.Controllers
 {
     public partial class HomeController : Controller
     {
-        private IBookRepo repo;
-
-        public HomeController(IBookRepo repo)
-        {
-            this.repo = repo;
-        }
-
         public virtual ActionResult Index()
         {
-            var booksFromXML = GetBooksFromXML();
-            var viewModel = ConstructViewModel(booksFromXML);
-            return View(viewModel);
-        }
-
-        private static List<HomeIndexViewModel> ConstructViewModel(List<Book> books)
-        {
-            var viewModel = new List<HomeIndexViewModel>();
-            foreach (var book in books)
-            {
-                viewModel.Add(new HomeIndexViewModel(book)
-                {
-                    IsInStock = book.Quantity <= 0,
-                    IsOld = book.Year < 1990
-                });
-            }
-            return viewModel;
-        }
-
-        private List<Book> GetBooksFromXML()
-        {
-            return repo.Books.ToList();
+            // List for books from DB.
+            var lst = new List<Book>();
+            // Get books from the XML file and turn them into Book objects. 
+            try { foreach (var y in XDocument.Load(AppDomain.CurrentDomain.GetData("DataDirectory").ToString() + @"\BookData.xml").Element("books").Elements("book").ToList()) { lst.Add(new Book() { Author = y.Element("author").Value, Title = y.Element("title").Value, Year = int.Parse(y.Element("year").Value), Quantity = int.Parse(y.Element("quantity").Value) }); } }
+            // Reading from files is dangerous, so lets catch any exeptions.
+            catch (Exception ex) { LogManager.GetLogger(typeof(HomeController)).Error("Stuff happened when loading the data from XML.", ex); throw ex; }
+            // Loop through the original list and filter certain results from the new list.  This is necessary because C# does not like us modifying the list that we are looping through.
+            var lst2 = new List<HomeIndexViewModel>();
+            foreach (var x in lst) lst2.Add(new HomeIndexViewModel(x) { IsInStock = x.Quantity <= 0, IsOld = x.Year < 1990 });
+            // Return the view and populate the model with the filtered list.
+            return View(lst2);
         }
     }
 }
