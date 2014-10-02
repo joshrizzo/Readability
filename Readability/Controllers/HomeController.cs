@@ -20,7 +20,8 @@ namespace Readability.Controllers
             // Get books from the XML file and turn them into Book objects. 
             try
             {
-                foreach (var book in XDocument.Load(AppDomain.CurrentDomain.GetData("DataDirectory").ToString() + @"\BookData.xml")
+                foreach (var book in XDocument.Load(AppDomain.CurrentDomain
+                    .GetData("DataDirectory").ToString() + @"\BookData.xml")
                     .Element("books").Elements("book").ToList())
                 {
                     booksFromXML.Add(new Book()
@@ -35,11 +36,14 @@ namespace Readability.Controllers
             // Reading from files is dangerous, so lets catch any exeptions.
             catch (Exception ex)
             {
-                LogManager.GetLogger(typeof(HomeController)).Error("Stuff happened when loading the data from XML.", ex);
+                LogManager.GetLogger(typeof(HomeController))
+                    .Error("Stuff happened when loading the data from XML.", ex);
                 throw ex;
             }
 
-            // Loop through the original list and filter certain results from the new list.  This is necessary because C# does not like us modifying the list that we are looping through.
+            // Loop through the original list and filter certain results from the 
+            // new list.  This is necessary because C# does not like us modifying 
+            // the list that we are looping through.
             var viewModel = new List<HomeIndexViewModel>();
             foreach (var book in booksFromXML)
             {
