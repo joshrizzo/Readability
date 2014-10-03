@@ -17,16 +17,16 @@ namespace Readability.Services
             this.session = session;
         }
 
-        public IEnumerable<Book> Books
+        public IEnumerable<Itm> Books
         {
             get 
             {
-                return session.Query<Book>().ToList();
+                return session.Query<Itm>().ToList();
             }
 
             set
             {
-                session.Query<Book>().ToList().ForEach(book => session.Delete(book));
+                session.Query<Itm>().ToList().ForEach(book => session.Delete(book));
                 value.ToList().ForEach(book => session.Store(book));
                 session.SaveChanges();
             }
