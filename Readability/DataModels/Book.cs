@@ -8,9 +8,9 @@ using System.Web;
 
 namespace Readability.DataModels
 {
-    public class Book
+    public class Itm
     {
-        public Book()
+        public Itm()
         {
             this.ID = Guid.NewGuid();
         }
@@ -18,14 +18,14 @@ namespace Readability.DataModels
         [Key]
         public Guid ID { get; set; }
 
-        public string Title { get; set; }
+        public string Ttl { get; set; }
 
-        public string Author { get; set; }
+        public string Auth { get; set; }
 
         [Year]
-        public int Year { get; set; }
+        public int Yr { get; set; }
 
         [Min(0)]
-        public int Quantity { get; set; }
+        public int Qty { get; set; }
     }
 }

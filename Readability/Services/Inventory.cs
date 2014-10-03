@@ -15,11 +15,11 @@ namespace Readability.Services
             this.repo = repo;
         }
 
-        public IEnumerable<Book> Book
+        public IEnumerable<Itm> Book
         {
             get
             {
-                return repo.Books.Where(x => x.Quantity > 0 && x.Year > 1990);
+                return repo.Books.Where(x => x.Qty > 0 && x.Yr > 1990);
             }
         }
     }
