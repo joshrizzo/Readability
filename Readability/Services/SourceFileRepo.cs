@@ -11,7 +11,7 @@ namespace Readability.Services
     {
         private string source = AppDomain.CurrentDomain.GetData("DataDirectory").ToString() + @"\BookData.xml";
 
-        public IEnumerable<Book> Books 
+        public IEnumerable<Itm> Books 
         { 
             get 
             {
@@ -19,12 +19,12 @@ namespace Readability.Services
                 var books = data.Element("books").Elements("book").ToList();
                 foreach (var book in books)
                 {
-                    yield return new Book()
+                    yield return new Itm()
                     {
-                        Author = book.Element("author").Value,
-                        Title = book.Element("title").Value,
-                        Year = int.Parse(book.Element("year").Value),
-                        Quantity = int.Parse(book.Element("quantity").Value)
+                        Auth = book.Element("author").Value,
+                        Ttl = book.Element("title").Value,
+                        Yr = int.Parse(book.Element("year").Value),
+                        Qty = int.Parse(book.Element("quantity").Value)
                     };
                 }
             } 
