@@ -11,13 +11,13 @@
             <th>New book?</th>
         </tr>
     </thead>
-    @foreach (var book in Model) 
+    @foreach (var x in Model) 
     {
         <tr>
-            <td>@book.Title</td>
-            <td>@book.Author</td>
-            <td>@book.IsInStock</td>
-            <td>@(book.IsOld == false)</td>
+            <td>@x.Ttl</td>
+            <td>@x.Auth</td>
+            <td>@x.S</td>
+            <td>@(x.O == false)</td>
         </tr>
     }
 </table>
