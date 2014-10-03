@@ -15,7 +15,7 @@ namespace Readability.Services
             this.db = new BookStoreContext();
         }
 
-        public IEnumerable<Book> Books
+        public IEnumerable<Itm> Books
         {
             get 
             {

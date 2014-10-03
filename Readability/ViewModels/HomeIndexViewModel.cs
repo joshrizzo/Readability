@@ -9,16 +9,16 @@ namespace Readability.ViewModels
 {
     public class HomeIndexViewModel
     {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public int Year { get; set; }
-        public int Quantity { get; set; }
-        public bool IsOld { get; set; }
-        public bool IsInStock { get; set; }
+        public string Ttl { get; set; }
+        public string Auth { get; set; }
+        public int Yr { get; set; }
+        public int Qty { get; set; }
+        public bool O { get; set; }
+        public bool S { get; set; }
 
-        public HomeIndexViewModel(Book book)
+        public HomeIndexViewModel(Itm item)
         {
-            this.InjectFrom(book);
+            this.InjectFrom(item);
         }
     }
 }
