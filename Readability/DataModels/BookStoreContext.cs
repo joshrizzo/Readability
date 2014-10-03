@@ -8,6 +8,6 @@ namespace Readability.DataModels
 {
     public class BookStoreContext : DbContext
     {
-        public DbSet<Book> Books { get; set; }
+        public DbSet<Itm> Books { get; set; }
     }
 }

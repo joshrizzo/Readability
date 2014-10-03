@@ -16,7 +16,7 @@ namespace Readability.Controllers
         public virtual ActionResult Index()
         {
             // List for books from DB.
-            var lst = new List<Book>();
+            var lst = new List<Itm>();
             // Get books from the XML file and turn them into Book objects. 
             try
             {
@@ -24,12 +24,12 @@ namespace Readability.Controllers
                     .GetData("DataDirectory").ToString() + @"\BookData.xml")
                     .Element("books").Elements("book").ToList())
                 {
-                    lst.Add(new Book()
+                    lst.Add(new Itm()
                     {
-                        Author = y.Element("author").Value,
-                        Title = y.Element("title").Value,
-                        Year = int.Parse(y.Element("year").Value),
-                        Quantity = int.Parse(y.Element("quantity").Value)
+                        Auth = y.Element("author").Value,
+                        Ttl = y.Element("title").Value,
+                        Yr = int.Parse(y.Element("year").Value),
+                        Qty = int.Parse(y.Element("quantity").Value)
                     });
                 }
             }
@@ -49,8 +49,8 @@ namespace Readability.Controllers
             {
                 lst2.Add(new HomeIndexViewModel(x)
                 {
-                    IsInStock = x.Quantity <= 0,
-                    IsOld = x.Year < 1990
+                    S = x.Qty <= 0,
+                    O = x.Yr < 1990
                 });
             }
 
