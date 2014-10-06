@@ -23,28 +23,9 @@ namespace Readability.Controllers
 
         public virtual ActionResult Index()
         {
-            var booksFromXML = GetBooksFromXML();
-            var viewModel = ConstructViewModel(booksFromXML);
+            var books = repo.Books;
+            var viewModel = new HomeIndexViewModelBuilder(books).Build();
             return View(viewModel);
-        }
-
-        private static List<HomeIndexViewModel> ConstructViewModel(List<Book> books)
-        {
-            var viewModel = new List<HomeIndexViewModel>();
-            foreach (var book in books)
-            {
-                viewModel.Add(new HomeIndexViewModel(book)
-                {
-                    IsInStock = book.Quantity <= 0,
-                    IsOld = book.Year < 1990
-                });
-            }
-            return viewModel;
-        }
-
-        private List<Book> GetBooksFromXML()
-        {
-            return repo.Books.ToList();
         }
     }
 }
