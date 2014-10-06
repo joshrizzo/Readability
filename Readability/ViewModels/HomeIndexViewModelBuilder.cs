@@ -9,9 +9,9 @@ namespace Readability.ViewModels
 {
     public class HomeIndexViewModelBuilder
     {
-        private IEnumerable<Book> books;
+        private List<Itm> books;
 
-        public HomeIndexViewModelBuilder(IEnumerable<Book> books)
+        public HomeIndexViewModelBuilder(List<Itm> books)
         {
             this.books = books;
         }
@@ -24,8 +24,8 @@ namespace Readability.ViewModels
                 var inventory = new InventoryDecorator(book);
                 viewModel.Add(new HomeIndexViewModel(book)
                 {
-                    IsInStock = inventory.IsInStock(),
-                    IsOld = !inventory.IsNew()
+                    S = inventory.IsInStock(),
+                    O = !inventory.IsNew()
                 });
             }
             return viewModel;
