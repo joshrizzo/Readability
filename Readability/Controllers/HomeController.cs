@@ -23,7 +23,7 @@ namespace Readability.Controllers
 
         public virtual ActionResult Index()
         {
-            var books = repo.Books;
+            var books = repo.Books.ToList();
             var viewModel = new HomeIndexViewModelBuilder(books).Build();
             return View(viewModel);
         }
