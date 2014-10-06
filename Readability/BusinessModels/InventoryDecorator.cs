@@ -8,21 +8,21 @@ namespace Readability.BusinessModels
 {
     public class InventoryDecorator
     {
-        private Book book;
+        private Itm book;
 
-        public InventoryDecorator(Book book)
+        public InventoryDecorator(Itm book)
         {
             this.book = book;
         }
 
         public bool IsInStock()
         {
-            return book.Quantity >= 0;
+            return book.Qty >= 0;
         }
 
         public bool IsNew()
         {
-            return book.Year > 1990;
+            return book.Yr > 1990;
         }
     }
 }
