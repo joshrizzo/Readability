@@ -23,8 +23,9 @@ namespace Readability.Controllers
 
         public virtual ActionResult Index()
         {
-            var books = repo.Books.ToList();
-            var viewModel = new HomeIndexViewModelBuilder(books).Build();
+            var books = repo.Books;
+            if (books == null) { throw new ApplicationException("No books found."); }
+            var viewModel = new HomeIndexViewModelBuilder(books.ToList()).Build();
             return View(viewModel);
         }
     }
