@@ -23,22 +23,8 @@ namespace Readability.Controllers
                 throw new ApplicationException("No books found.");
             }
 
-            var viewModel = ConstructViewModel(booksFromXML);
+            var viewModel = new HomeIndexViewModelBuilder(booksFromXML).Build();
             return View(viewModel);
-        }
-
-        private static List<HomeIndexViewModel> ConstructViewModel(List<Book> booksFromXML)
-        {
-            var viewModel = new List<HomeIndexViewModel>();
-            foreach (var book in booksFromXML)
-            {
-                viewModel.Add(new HomeIndexViewModel(book)
-                {
-                    IsInStock = book.Quantity <= 0,
-                    IsOld = book.Year < 1990
-                });
-            }
-            return viewModel;
         }
     }
 }
