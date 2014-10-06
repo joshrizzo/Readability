@@ -41,21 +41,29 @@ namespace Readability.Controllers
                 throw ex;
             }
 
-            // Loop through the original list and filter certain results from the 
-            // new list.  This is necessary because C# does not like us modifying 
-            // the list that we are looping through.
-            var lst2 = new List<HomeIndexViewModel>();
-            foreach (var x in lst)
+            if (lst == null)
             {
-                lst2.Add(new HomeIndexViewModel(x)
-                {
-                    S = x.Qty <= 0,
-                    O = x.Yr < 1990
-                });
+                throw new ApplicationException("No books found.");
             }
+            else
+            {
 
-            // Return the view and populate the model with the filtered list.
-            return View(lst2);
+                // Loop through the original list and filter certain results from the 
+                // new list.  This is necessary because C# does not like us modifying 
+                // the list that we are looping through.
+                var lst2 = new List<HomeIndexViewModel>();
+                foreach (var x in lst)
+                {
+                    lst2.Add(new HomeIndexViewModel(x)
+                    {
+                        S = x.Qty <= 0,
+                        O = x.Yr < 1990
+                    });
+                }
+
+                // Return the view and populate the model with the filtered list.
+                return View(lst2);
+            }
         }
     }
 }
