@@ -16,7 +16,13 @@ namespace Readability.Controllers
     {
         public virtual ActionResult Index()
         {
-            var booksFromXML = GetBooksFromXML();
+            var booksFromXML = new SourceFileRepo().Books.ToList();
+
+            if (booksFromXML == null)
+            {
+                throw new ApplicationException("No books found.");
+            }
+
             var viewModel = ConstructViewModel(booksFromXML);
             return View(viewModel);
         }
@@ -33,11 +39,6 @@ namespace Readability.Controllers
                 });
             }
             return viewModel;
-        }
-
-        private List<Book> GetBooksFromXML()
-        {
-            return new SourceFileRepo().Books.ToList();
         }
     }
 }
