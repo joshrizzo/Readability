@@ -41,35 +41,28 @@ namespace Readability.Controllers
                 throw ex;
             }
 
-            // Loop through the original list and filter certain results from the 
-            // new list.  This is necessary because C# does not like us modifying 
-            // the list that we are looping through.
-            var viewModel = new List<HomeIndexViewModel>();
-            foreach (var book in booksFromXML)
+            if (booksFromXML == null)
             {
-                foreach (var book in XDocument.Load(AppDomain.CurrentDomain
-                    .GetData("DataDirectory").ToString() + @"\BookData.xml")
-                    .Element("books").Elements("book").ToList())
+                throw new ApplicationException("No books found.");
+            }
+            else
+            {
+                // Loop through the original list and filter certain results from the 
+                // new list.  This is necessary because C# does not like us modifying 
+                // the list that we are looping through.
+                var viewModel = new List<HomeIndexViewModel>();
+                foreach (var book in booksFromXML)
                 {
-                    booksFromXML.Add(new Book()
+                    viewModel.Add(new HomeIndexViewModel(book)
                     {
-                        Author = book.Element("author").Value,
-                        Title = book.Element("title").Value,
-                        Year = int.Parse(book.Element("year").Value),
-                        Quantity = int.Parse(book.Element("quantity").Value)
+                        IsInStock = book.Quantity <= 0,
+                        IsOld = book.Year < 1990
                     });
                 }
-            }
-            // Reading from files is dangerous, so lets catch any exeptions.
-            catch (Exception ex)
-            {
-                LogManager.GetLogger(typeof(HomeController))
-                    .Error("Stuff happened when loading the data from XML.", ex);
-                throw ex;
-            }
 
-            // Return the view and populate the model with the filtered list.
-            return View(viewModel);
+                // Return the view and populate the model with the filtered list.
+                return View(viewModel);
+            }
         }
     }
 }
