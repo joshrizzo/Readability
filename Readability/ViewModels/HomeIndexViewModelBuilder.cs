@@ -9,9 +9,9 @@ namespace Readability.ViewModels
 {
     public class HomeIndexViewModelBuilder
     {
-        private List<Book> books;
+        private IEnumerable<Book> books;
 
-        public HomeIndexViewModelBuilder(List<Book> books)
+        public HomeIndexViewModelBuilder(IEnumerable<Book> books)
         {
             this.books = books;
         }
