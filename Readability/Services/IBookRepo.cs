@@ -8,6 +8,6 @@ namespace Readability.Services
 {
     public interface IBookRepo
     {
-        IEnumerable<Book> Books { get; }
+        IEnumerable<Itm> Books { get; }
     }
 }
