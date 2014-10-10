@@ -18,6 +18,11 @@ namespace Readability.Controllers
             // List for books from DB.
             var booksFromXML = GetBooksFromXML();
 
+            if (booksFromXML == null) 
+            {
+                throw new ApplicationException("No books found.");
+            }
+            
             // Construct the View Model.
             var viewModel = ConstructViewModel(booksFromXML);
 

@@ -228,11 +228,12 @@
     <Compile Include="DataModels\Book.cs" />
     <Compile Include="DataModels\BookStoreContext.cs" />
     <Compile Include="Services\IBookRepo.cs" />
-    <Compile Include="Services\Inventory.cs" />
+    <Compile Include="BusinessModels\InventoryDecorator.cs" />
     <Compile Include="Services\RavenRepo.cs" />
     <Compile Include="Services\SourceFileRepo.cs" />
     <Compile Include="Services\SQLRepo.cs" />
     <Compile Include="ViewModels\HomeIndexViewModel.cs" />
+    <Compile Include="ViewModels\HomeIndexViewModelBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\BookData.xml" />
