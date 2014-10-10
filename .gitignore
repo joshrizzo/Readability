@@ -182,3 +182,7 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# Data
+[Aa]pp_[Dd]ata/
+[Rr]aven/
