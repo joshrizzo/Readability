@@ -17,7 +17,11 @@ namespace Readability.Controllers
         public virtual ActionResult Index()
         {
             var data = new BookStoreContext().Books.ToList();
-            var model = data.Select(book => new HomeIndexViewModel(book) { IsInStock = book.Quantity > 0, IsOld = book.Year < 1990 });
+            var model = data.Select(book => new HomeIndexViewModel(book)
+                {
+                    IsInStock = book.Quantity > 0,
+                    IsOld = book.Year < 1990
+                });
             return View(model);
         }
     }
